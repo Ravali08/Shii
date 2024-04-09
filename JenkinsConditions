@@ -5,9 +5,13 @@ pipeline {
     }
 	stages {
   stage('Checkout') {
+	input{
+	message "should we continue?"
+	ok "Yess!!"
+	}
     steps {
       echo "checkout"
-	sh 'sleep 80'
+	
     }
   }
   stage('Test') {
@@ -24,7 +28,6 @@ environment name: 'Deploy', value: 'QA'
   }
     steps {
       echo "checkout"
-	sh 'sleep 80'
     }
 }
 
