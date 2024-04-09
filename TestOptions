@@ -11,9 +11,8 @@ pipeline {
       echo "checkout"
     }
   }
-  stage('Push to Docker') {
+  stage('Test') {
     steps {
-      sh Docker push
 	echo "push to docker"
     }
   }
