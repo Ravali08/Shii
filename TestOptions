@@ -1,7 +1,7 @@
 pipeline {
     agent any
     options {
-  timestamps
+  timestamps(time: 1, unit: 'MINUTES' )
   retry(2)
   timeout(1)
 }
