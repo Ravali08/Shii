@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+    options {
+  timestamps()
+  retry(2)
+}
+
+	stages {
+  stage('Checkout') {
+    steps {
+      echo "checkout"
+    }
+  }
+  stage('Push to Docker') {
+    steps {
+      sh Docker push
+	echo "push to docker"
+    }
+  }
+
+}
+
+}
