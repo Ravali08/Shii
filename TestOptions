@@ -1,9 +1,9 @@
 pipeline {
     agent any
     options {
-  timestamps(time: 1, unit: 'MINUTES' )
+  timestamps()
   retry(2)
-  timeout(1)
+  timeout(time: 1, unit: 'MINUTES')
 }
 	stages {
   stage('Checkout') {
