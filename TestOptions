@@ -1,14 +1,15 @@
 pipeline {
     agent any
     options {
-  timestamps()
+  timestamps
   retry(2)
+  timeout(1)
 }
-
 	stages {
   stage('Checkout') {
     steps {
       echo "checkout"
+	sh 'sleep 80'
     }
   }
   stage('Test') {
