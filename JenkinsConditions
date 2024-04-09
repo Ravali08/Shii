@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+    parameters {
+    choice(name: 'Deploy', choices: ['Dev', 'QA', 'TRAIN'])
+    }
+	stages {
+  stage('Checkout') {
+    steps {
+      echo "checkout"
+	sh 'sleep 80'
+    }
+  }
+  stage('Test') {
+	when{
+	branch 'master'
+	}
+    steps {
+	echo "push to docker"
+    }
+  }
+ stage('Deploy') {
+  when{
+environment name: 'Deploy', value: 'QA'
+  }
+    steps {
+      echo "checkout"
+	sh 'sleep 80'
+    }
+}
+
+}
+}
