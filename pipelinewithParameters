@@ -8,7 +8,7 @@ pipeline {
 	stages {
   		 stage('Test_Parameters'){
    			 steps {
-      				echo "Name is : ${value}"
+      				echo "user_id is : ${value}"
      				echo "Choice is : ${Env}"
      				echo "Boolean is : ${Bool}"
   			  }
