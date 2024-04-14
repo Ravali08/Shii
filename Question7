@@ -56,7 +56,7 @@ pipeline {
              post {
               success {
                       // One or more steps need to be included within each condition's block.
-                      echo " Stage 2 executed successfully"
+                      echo " Stage 3 executed successfully"
               }
             }
         }
