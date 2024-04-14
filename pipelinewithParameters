@@ -1,14 +1,14 @@
 pipeline {
     agent any
     parameters {
+	string{defaultValue: 'test', name: 'value'}
   	booleanParam defaultValue: true, name: 'Bool'
-  	string defaultValue: 'Test', name: 'Name'
   	choice choices: ['Train', 'Val', 'Prod', 'Dev'], name: 'Env'
  	}	
 	stages {
   		 stage('Test_Parameters'){
    			 steps {
-      				echo "Name is : ${Name}"
+      				echo "Name is : ${value}"
      				echo "Choice is : ${Env}"
      				echo "Boolean is : ${Bool}"
   			  }
