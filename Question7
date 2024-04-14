@@ -1,0 +1,100 @@
+pipeline {
+    agent none // No default agent, stages will specify agents explicitly
+    triggers {
+        cron('H/15 * * * *') // Run every 15 minutes
+        pollSCM('*/15 * * * *') // Poll SCM every 15 minutes
+    }
+    environment {
+        STRING_VARIABLE = "Testing!!!" // Dynamically set string variable
+        CHOICE_VARIABLE = "Option 2" // Dynamically set choice variable
+        BOOLEAN_VARIABLE = false // Dynamically set boolean variable
+        SECRET_TEXT = credentials('Secret')
+        USERNAME = credentials('username')
+
+    }
+
+    stages {
+        stage('Stage 1') {
+            agent { label 'node11' } // Run on agent1
+            steps {
+                echo "Running Stage 1"
+                script {
+                    // Use global variables
+                    def currentBuildNumber = env.BUILD_NUMBER
+                    echo "Current build number: $currentBuildNumber"
+                }
+            }
+        }
+
+        stage('Stage 2') {
+            agent { label 'node11' } // Run on agent1
+            steps {
+                echo "Running Stage 2"
+                    // Use environment variables
+                    echo "String Variable: ${env.STRING_VARIABLE}"
+                    echo "Choice Variable: ${env.CHOICE_VARIABLE}"
+                    echo "Boolean Variable: ${env.BOOLEAN_VARIABLE}"
+            }
+            post {
+              success {
+                      // One or more steps need to be included within each condition's block.
+                      echo " Stage 2 executed successfully"
+              }
+            }
+        }
+
+        stage('Stage 3') {
+            when {
+                allOf {
+                    expression { 
+                       branch 'master, Dev'   
+                    } 
+                }
+            }
+             agent { label 'node12' }
+            steps {
+                echo "Running Stage 3"
+                sh 'echo "My secret Credential is : ${SECRET_TEXT}"'
+                sh 'echo "My username Credential is : ${USERNAME_USR}"'
+                sh 'echo "My password Credential is : ${USERNAME_PSW}"'
+            }
+             post {
+              success {
+                      // One or more steps need to be included within each condition's block.
+                      echo " Stage 2 executed successfully"
+              }
+            }
+        }
+
+        stage('Stage 4') {
+            agent { label 'node12' }
+            steps {
+                echo "${env.BUILD_ID} is running for job ${env.JOB_NAME} where URL's are jenkins_url is ${env.JENKINS_URL} and Job_url is ${env.BUILD_URL}"
+                echo "Running Stage 4"
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Build successful!"
+            // Send email notification on success
+            emailext (
+                subject: "Jenkins Build Successful",
+                body: "The Jenkins build was successful.",
+                to: "brsra21@gmail.com",
+                attachLog: true
+            )
+        }
+        failure {
+            echo "Build failed!"
+            // Send email notification on failure
+            emailext (
+                subject: "Jenkins Build Failed",
+                body: "The Jenkins build failed.",
+                to: "brsra21@gmail.com",
+                attachLog: true
+            )
+        }
+    }
+}
