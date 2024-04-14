@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+    parameters {
+    choice(name: 'Deploy', choices: ['Dev', 'QA', 'TRAIN'])
+    booleanParam defaultValue: true, name: 'Bool'
+    string defaultValue: 'Test', name: 'Name'
+    }
+	stages {
+   stage('Test_Parameters'){
+    steps {
+      echo "Name is : ${Name}"
+      echo "Choice is : ${Deploy}"
+      echo "Boolean is : ${Bool}"
+    }
+  }
+}
+}
