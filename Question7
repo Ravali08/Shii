@@ -31,9 +31,9 @@ pipeline {
             steps {
                 echo "Running Stage 2"
                     // Use environment variables
-                    echo "String Variable: ${env.STRING_VARIABLE}"
-                    echo "Choice Variable: ${env.CHOICE_VARIABLE}"
-                    echo "Boolean Variable: ${env.BOOLEAN_VARIABLE}"
+                    echo "String Variable: ${STRING_VARIABLE}"
+                    echo "Choice Variable: ${CHOICE_VARIABLE}"
+                    echo "Boolean Variable: ${BOOLEAN_VARIABLE}"
             }
             post {
               success {
