@@ -83,6 +83,16 @@ pipeline {
                 to: "brsra21@gmail.com",
                 attachLog: true
             )
-        }    
+        }
+        failure {
+            echo "Build failed!"
+            // Send email notification on failure
+            emailext (
+                subject: "Jenkins Build Failed",
+                body: "The Jenkins build failed.",
+                to: "brsra21@gmail.com",
+                attachLog: true
+            )
+        }
     }
 }
