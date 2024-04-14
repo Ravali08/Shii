@@ -7,7 +7,7 @@ pipeline {
     environment {
         STRING_VARIABLE = "Testing!!!" // Dynamically set string variable
         CHOICE_VARIABLE = "Option 2" // Dynamically set choice variable
-        BOOLEAN_VARIABLE = false // Dynamically set boolean variable
+        BOOLEAN_VARIABLE = true // Dynamically set boolean variable
         SECRET_TEXT = credentials('Secret')
         USERNAME = credentials('username')
 
@@ -18,11 +18,6 @@ pipeline {
             agent { label 'node11' } // Run on agent1
             steps {
                 echo "Running Stage 1"
-                script {
-                    // Use global variables
-                    def currentBuildNumber = env.BUILD_NUMBER
-                    echo "Current build number: $currentBuildNumber"
-                }
             }
         }
 
@@ -50,7 +45,7 @@ pipeline {
                        branch 'master, Dev'   
                     } 
                 }
-            }
+             }
              agent { label 'node12' }
             steps {
                 echo "Running Stage 3"
@@ -85,16 +80,6 @@ pipeline {
                 to: "brsra21@gmail.com",
                 attachLog: true
             )
-        }
-        failure {
-            echo "Build failed!"
-            // Send email notification on failure
-            emailext (
-                subject: "Jenkins Build Failed",
-                body: "The Jenkins build failed.",
-                to: "brsra21@gmail.com",
-                attachLog: true
-            )
-        }
+        }    
     }
 }
