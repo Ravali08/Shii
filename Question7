@@ -10,9 +10,12 @@ pipeline {
         BOOLEAN_VARIABLE = true // Dynamically set boolean variable
         SECRET_TEXT = credentials('Secret')
         USERNAME = credentials('username')
-
     }
-
+    parameters {
+        string defaultValue: 'Testing!!!', name: 'STRING_VARIABLE'
+        choice choices: ['Option 1', 'Option 2', 'Option 3', 'Option 4'], name: 'CHOICE_VARIABLE'
+        booleanParam defaultValue: true, name: 'BOOLEAN_VARIABLE'
+    }    
     stages {
         stage('Stage 1') {
             agent { label 'node11' } // Run on agent1
