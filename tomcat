@@ -23,7 +23,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh "rync -r /home/ubuntu/jenkins/workspace/j1/target/dependency/webapp-runner.jar /etc/tomcat9/tomcat/webapps/"
+                sh "rync -r /home/ubuntu/jenkins/workspace/j1/target/dependency/webapp-runner.jar /opt/tomcat9/bin/"
                 echo "Deployed"
             }
         }
